@@ -24,68 +24,75 @@ What we need to do:
 //
 
 
-function seperateData(word){
-
+function seperateData(word) {
   let patternNumber = parseInt(word[0]) + 1;
-  let M = word.split(' ').slice(patternNumber);
-  M.shift();
 
   let N = word.split(' ', patternNumber);
   N.shift()
 
-   // console.log(M, M.length, 'M');
-   // console.log(N, N.length, 'N');
-   changeIntoArrays(N,M)
+  let M = word.split(' ').slice(patternNumber);
+  M.shift();
+
+  changeIntoArrays(N, M)
 }
 
-
-// function match(listOne, listTwo) {
-//   let match = [];
-//   //creates both items into array
-//   listOne = changeIntoArrays(listOne, null);
-//   listTwo = changeIntoArrays(null, listTwo);
-//
-//   // if both arrays length match
-//   if (listOne.length == listTwo.length) {
-//     for (var i = 0; i < listOne.length; i++) {
-//
-//       for (var j = 0; j < listTwo.length; j++) {
-//         if (listOne[i] == listTwo[j]) {
-//           match.push(listOne[i])
-//         }
-//       }
-//     }
-//     console.log(match, 'new match');
-//     console.log(listOne.join(','), 'listOne');
-//   }
-//   else {
-//     console.log('does not match');
-//   }
-// };
-
-//changes both items lists into an array and removes ',' and '/'
-function changeIntoArrays(listOne,listTwo){
+function changeIntoArrays(listOne, listTwo) {
   let newListOne = [];
-  for(let i of listOne) {
-    i = i.split("")
-    while (i.includes("*")) {
-      i = removeSpecial(i, "*")
-    }
+  let newListTwo = [];
+  for (let i of listOne) {
+    i = i.split(" ")
+    // while (i.includes("*")) {
+    //   i = removeSpecial(i, "*")
+    // }
     while (i.includes(",")) {
       i = removeSpecial(i, ",")
     }
-
     newListOne.push(i.join('').split());
   }
-  console.log(newListOne, 'newListOne');
 
+  for (let j of listTwo) {
+    j = j.split("")
+    while (j.includes("/")) {
+      j = removeSpecial(j, "/")
+    }
+    newListTwo.push(j.join('').split(" "))
+  }
+
+  // console.log(newListTwo,'newListTwo');
+  match(newListOne, newListTwo);
 }
 
 function removeSpecial(array, element) {
-    const index = array.indexOf(element);
+  const index = array.indexOf(element);
+  if (element == ",") {
     array.splice(index, 1);
     return array
+  }
+  else if (element == "/") {
+    array.splice(index, 1, ",");
+    return array
+  }
 }
+
+
+function match(listOne, listTwo) {
+  // console.log(listOne, 'listOne');
+  listOne = listOne.join(" ").split(' ')
+  listTwo = listTwo.join(" ").split(' ')
+  console.log(listOne, 'listOne');
+  console.log(listTwo, 'listTwo');
+  let match = [];
+  // for(let i of listOne){
+  //   for(let j of listTwo){
+  //     if (i == j) {
+  //       console.log('works');
+  //     }
+  //   }
+  // }
+};
+
+//changes both items lists into an array and removes ',' and '/'
+
 
 
 
