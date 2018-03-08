@@ -4,9 +4,13 @@ let arr2 = [['a','a','c', 'f'], ['d','b','f'], ['a', 'b', 'c']]
 let innerArrayListOne;
 let innerArrayListTwo;
 let compareThis;
+let index;
 let toThat;
 let doesMatch;
 let currentArr;
+let objectReturnToSame = {};
+let returnToSame = []
+let count = 0
 
 // let match = []
 // let newx;
@@ -22,50 +26,96 @@ function sameLength(arr1, arr2) {
   for (var y = 0; y < arr2.length; y++) {
     innerArrayListTwo = arr2[y]
     if (innerArrayListOne.length == innerArrayListTwo.length) {
-        sameLetters(innerArrayListOne, innerArrayListTwo)
+        doesMatch = sameLetters(innerArrayListOne, innerArrayListTwo)
       }
     }
   }
+  // console.log(doesMatch);
 }
-// [ '*', 'b', '*' ]
-// [ 'a', '*', '*' ]
-// [ '*', 'b', 'c' ]
+
+// [ '*', 'b', '*' ] 'and' [ 'd', 'b', 'f' ]
+// [ '*', 'b', '*' ] 'and' [ 'a', 'b', 'c' ]
+// [ 'a', '*', '*' ] 'and' [ 'd', 'b', 'f' ]
+// [ 'a', '*', '*' ] 'and' [ 'a', 'b', 'c' ]
+// [ '*', 'b', 'c' ] 'and' [ 'd', 'b', 'f' ]
+// [ '*', 'b', 'c' ] 'and' [ 'a', 'b', 'c' ]
+
+
+
+// [ [ '*', 'b', '*' ], [ 'd', 'b', 'f' ] ] 'doesMatch'
+//
+//
+// [ [ '*', 'b', '*' ],[ 'a', 'b', 'c' ],
+//   [ '*', 'b', '*' ],[ 'd', 'b', 'f' ] ]
 
 function sameLetters(arr1, arr2){
+  count ++
   // console.log(arr1 + ' and ' + arr2);
-  for (var x = 0; x < arr1.length; x++) {
-    // console.log(x, 'postion/index');
-    // console.log(arr1[x], 'This is the letter of the array');
-    // console.log(arr1, 'arr1');
-    for (var y = 0; y < arr2.length; y++) {
-      // console.log(y, 'postion/index')
-      // console.log(arr2[y], 'This is the letter of the array')
-      if (y == x && arr1[x] == arr2[y]) {
-        //if the postion and the letter match
+  compareThis = arr1.join()
+  toThat = arr2.join()
+  toThat = toThat.replace(/[^a-zA-Z 0-9]+/g, '');
+  compareThis = compareThis.replace(/[^a-zA-Z 0-9]+/g, '');
+  // console.log(compareThis,'compareThis', toThat);
+  index = toThat.indexOf(compareThis)
+  // console.log(index,'index');
 
-        compareThis = arr1.join()
-        toThat = arr2.join()
-        compareThis = compareThis.replace(/[^a-zA-Z 0-9]+/g, '');
-        toThat = toThat.replace(/[^a-zA-Z 0-9]+/g, '');
-        doesMatch = toThat.includes(compareThis);
+  if (index == 1) {
+    // console.log(arr2, 'arr2');
+    returnToSame.push(arr1, arr2)
+    // [ '*', 'b', '*' ] 'arr1' [ 'd', 'b', 'f' ] 'arr2'
+    // [ '*', 'b', '*' ] 'arr1' [ 'a', 'b', 'c' ] 'arr2'
+    // [ '*', 'b', 'c' ] 'arr1' [ 'a', 'b', 'c' ] 'arr2'
 
-        // console.log(compareThis, 'is in', toThat);
-        // tempArr1 = tempArr1
-        // console.log(arr1.match);
-        // console.log(compareThis + ' and ' + toThat);
-      }
+    // console.log(objectReturnToSame);
 
-    }
+    // console.log(returnToSame, 'returnToSame');
 
+
+    // [ [ '*', 'b', '*' ], [ 'd', 'b', 'f' ] ] 'returnToSame'
+    // [ [ '*', 'b', '*' ], [ 'a', 'b', 'c' ] ] 'returnToSame'
+    // [ [ '*', 'b', 'c' ], [ 'a', 'b', 'c' ] ] 'returnToSame'
+    // console.log(returnToSame,'returnToSame');
+    return returnToSame
   }
-  if (doesMatch) {
-    finalList(compareThis, toThat)
-  }
+
+
+  //
+  // for (var x = 0; x < arr1.length; x++) {
+  //   // console.log(x, 'postion/index');
+  //   // console.log(arr1[x], 'X This is the letter of the array');
+  //   // console.log(arr1, 'arr1');
+  //   for (var y = 0; y < arr2.length; y++) {
+  //     // console.log(y, 'postion/index')
+  //     // console.log(arr2[y], 'Y This is the letter of the array')
+  //     if (y == x && arr1[x] == arr2[y]) {
+  //       // console.log(arr1, 'and', arr2);
+  //       //if the postion and the letter match
+  //       compareThis = arr1.join()
+  //       toThat = arr2.join()
+  //       compareThis = compareThis.replace(/[^a-zA-Z 0-9]+/g, '');
+  //       toThat = toThat.replace(/[^a-zA-Z 0-9]+/g, '');
+  //       if(toThat.includes(compareThis)){
+  //
+  //         // console.log(compareThis, 'and', toThat , 'in the if statments');
+  //       }
+  //       // doesMatch = toThat.includes(compareThis);
+  //
+  //       // console.log(compareThis, 'is in', toThat);
+  //       // tempArr1 = tempArr1
+  //       // console.log(arr1.match);
+  //     }
+  //
+  //   }
+  //
+  // }
+  // if (doesMatch) {
+  //   finalList(compareThis, toThat)
+  // }
 }
 
 function finalList(arr1, arr2){
-  console.log(' compareThis ',arr1, ' toThat ', arr2 );
-  
+  // console.log(' compareThis ',arr1, ' toThat ', arr2 );
+
 
 }
 
