@@ -20,6 +20,10 @@ Even through the pattern matches.
 What we need to do:
 1) see if length matches. This can be done
 2) it recognizes the '/' at the end and makes it a item. This throws off counts
+3) if statments:
+  if length and characters the same = matches
+  if length and most characters the same = matches
+  if length is the same and only one character matches then has to be at index = matches
 */
 //
 
@@ -32,86 +36,117 @@ function seperateData(word) {
 
   let M = word.split(' ').slice(patternNumber);
   M.shift();
+  // M = M.``toString()
 
-  changeIntoArrays(N, M)
+  // changeIntoArrays(N, M)
+  //[ '/w/x/y/z/', 'a/b/c', 'foo/', 'foo/bar/', 'foo/bar/baz/' ] 'M'
+  //[ '*,b,*', 'a,*,*', '*,*,c', 'foo,bar,baz', 'w,x,*,*', '*,x,y,z' ] 'N'
+  final(N, M)
 }
 
-function changeIntoArrays(listOne, listTwo) {
-  let newListOne = [];
-  let newListTwo = [];
-  for (let i of listOne) {
-    i = i.split(" ")
-    // while (i.includes("*")) {
-    //   i = removeSpecial(i, "*")
-    // }
-    while (i.includes(",")) {
-      i = removeSpecial(i, ",")
+// [ '', 'w', 'x', 'y', 'z', '' ] 'arr'
+// [ 'a', 'b', 'c' ] 'arr'
+// [ 'foo', '' ] 'arr'
+// [ 'foo', 'bar', '' ] 'arr'
+// [ 'foo', 'bar', 'baz', '' ] 'arr'
+
+// ,w,x,y,z,
+// a,b,c
+// foo,
+// foo,bar,
+// foo,bar,baz,
+
+function final(N, M){
+    let mArr = []
+    let nArr = []
+    let object = {}
+    let newArr = []
+    M = M.join(" ")
+    M = M.replace(/[&\/\\]/g, ',')
+    M = M.split(' ')
+    N = N.join(' ').split(' ')
+
+    for (var i = 0; i < M.length; i++) {
+      mArr = M[i].split(",")
+      if (mArr[0] == '') {
+         mArr.shift()
+         if (mArr[mArr.length - 1] == '') {
+           mArr.pop()
+         }
+        newArr.push(mArr);
+      }
+      else if (mArr[mArr.length - 1] == '') {
+        mArr.pop()
+        newArr.push(mArr);
+      }
+      else {
+        newArr.push(mArr);
+      }
     }
-    newListOne.push(i.join('').split());
-  }
+      console.log(newArr,'newArr');
 
-  for (let j of listTwo) {
-    j = j.split("")
-    while (j.includes("/")) {
-      j = removeSpecial(j, "/")
+    for (var i = 0; i < N.length; i++) {
+        nArr = N[i].split(",")
+        object[i] = nArr
     }
-    newListTwo.push(j.join('').split(" "))
-  }
-
-  // console.log(newListTwo,'newListTwo');
-  match(newListOne, newListTwo);
+    console.log(object, 'object');
 }
 
-function removeSpecial(array, element) {
-  const index = array.indexOf(element);
-  if (element == ",") {
-    array.splice(index, 1);
-    return array
-  }
-  else if (element == "/") {
-    array.splice(index, 1, ",");
-    return array
-  }
-}
-
-
-function match(listOne, listTwo) {
-  // console.log(listOne, 'listOne');
-  listOne = listOne.join(" ").split(' ')
-  listTwo = listTwo.join(" ").split(' ')
-  console.log(listOne, 'listOne');
-  console.log(listTwo, 'listTwo');
-  let match = [];
-  // for(let i of listOne){
-  //   for(let j of listTwo){
-  //     if (i == j) {
-  //       console.log('works');
-  //     }
-  //   }
-  // }
-};
-
-//changes both items lists into an array and removes ',' and '/'
-
-
-
-
-
-// match("A,*,B,*,C", "A/foo/B/bar/C")
-// match("*,x,y,z", "/w/x/y/z/")
-
-// function seperateData(word){
 //
-//   let patternNumber = parseInt(word[0]) + 1;
-//   let M = word.split(' ').slice(patternNumber);
-//   M.shift();
 //
-//   let N = word.split(' ', patternNumber);
-//   N.shift()
+// function changeIntoArrays(listOne, listTwo) {
+//   let newListOne = [];
+//   let newListTwo = [];
 //
-//    console.log(M, M.length, 'M');
-//    console.log(N, N.length, 'N');
+//   for (let i of listOne) {
+//     i = i.split(",")
+//     newListOne.push(i.join('').split(' ').join());
+//   }
+//
+//
+//   for (let j of listTwo) {
+//     j = j.split("")
+//     while (j.includes("/")) {
+//       j = removeSpecial(j, "/", ",")
+//     }
+//     while (j.includes(",")) {
+//       j = removeSpecial(j, ",")
+//     }
+//     newListTwo.push(j.join('').split(" ").join())
+//   }
+//
+//   compare(newListOne, newListTwo);
+//   // [ '*b*', 'a**', '**c', 'foobarbaz', 'wx**', '*xyz' ] 'newListOne'
+//   // [ 'wxyz', 'abc', 'foo', 'foobar', 'foobarbaz' ] 'newListTwo'
 // }
+//
+// function removeSpecial(array, element) {
+//   // array = array.split()
+//   const index = array.indexOf(element);
+//   if (element == ",") {
+//     array.splice(index, 1);
+//     return array
+//   }
+//   else if (element == "/") {
+//     array.splice(index, 1, ",");
+//     return array
+//   }
+// }
+//
+// // let found = arr1.some(r=> arr2.includes(r))
+//
+// function compare(listOne, listTwo) {
+//   let onlyLetter = [/[a-z]/g];
+//   let index;
+//   let xLetter;
+//   let same = listOne.filter((word) => listTwo.includes(word))
+//
+//   console.log(listOne);
+//
+//
+// }
+
+
 
 let file = "6 *,b,* a,*,* *,*,c foo,bar,baz w,x,*,* *,x,y,z 5 /w/x/y/z/ a/b/c foo/ foo/bar/ foo/bar/baz/"
 
