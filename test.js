@@ -1,6 +1,6 @@
-let arr1 = [['*','b','*'], ['a', '*', '*'], ['*', 'b', 'c']]
-let arr2 = [['a','a','c', 'f'], ['d','b','f'], ['a', 'b', 'c']]
-//results = '*','b','*' matches with 'd','b','f' and '*', 'b', 'c' mathes with 'a', 'b', 'c'
+const arr1 = [['*', 'b', '*'], ['a', '*', '*'], ['*', 'b', 'c']];
+const arr2 = [['a', 'a', 'c', 'f'], ['d', 'b', 'f'], ['a', 'b', 'c']];
+// results = '*','b','*' matches with 'd','b','f' and '*', 'b', 'c' mathes with 'a', 'b', 'c'
 let innerArrayListOne;
 let innerArrayListTwo;
 let compareThis;
@@ -10,7 +10,8 @@ let doesMatch;
 let objectPush;
 let finalArr = [];
 let previous = null;
-
+let objectValue;
+let objectKey;
 sameLength(arr1, arr2)
 
 function sameLength(arr1, arr2) {
@@ -28,7 +29,7 @@ function sameLength(arr1, arr2) {
 }
 
 
-function sameLetters(arr1, arr2){
+function sameLetters(arr1, arr2) {
 
   // console.log(arr1 + ' and ' + arr2);
   compareThis = arr1.join()
@@ -40,7 +41,7 @@ function sameLetters(arr1, arr2){
   // console.log(index,'index');
 
   if (index == 1) {
-    // console.log(arr1, 'and', arr2);
+    console.log(arr1, 'and', arr2);
     // [ '*', 'b', '*' ] 'and' [ 'd', 'b', 'f' ]
     // [ '*', 'b', '*' ] 'and' [ 'a', 'b', 'c' ]
     // [ '*', 'b', 'c' ] 'and' [ 'a', 'b', 'c' ]
@@ -51,23 +52,34 @@ function sameLetters(arr1, arr2){
 function final(arr1, arr2) {
   // console.log(arr1, 'and', arr2, count);
   objectPush = {[arr1] : arr2}
-  console.log(Object.keys(objectPush), 'and ',previous,'previous');
+  // { '*,b,*': ['d', 'b', 'f' ] }  - objectPush turns into object.
+  // { '*,b,*': [ 'a', 'b', 'c' ] } 'objectPush'
+  // { '*,b,c': [ 'a', 'b', 'c' ] } 'objectPush'
+
+  //On first run finalArr.length does equal zero.
 
   if (finalArr.length == 0) {
     finalArr.push(objectPush)
-    console.log(finalArr, 'first Step');
+    // [ { '*,b,*': [ 'd', 'b', 'f' ] } ] 'first Step'
   }
+  // on first run previous is null
   else if (previous != null) {
-    for (var i = 0; i < finalArr.length; i++) {
-      console.log(Object.values(finalArr[i]),'Object.values(finalArr[i])')
-      console.log(Object.values(objectPush),'Object.values(objectPush)')
+    for (var i = 0; i < previous.length; i++) {
+      objectKey = Object.values(previous[i])
+      // [ [ 'd', 'b', 'f' ] ] 'objectKey'
+      objectValue = Object.values(objectPush)
+      console.log(objectValue, 'objectValue')
+      console.log(objectKey ,'objectKey')
 
       if (Object.values(finalArr[i]) == Object.values(objectPush)) {
       }
     }
   }
   else {
-    previous = Object.values(objectPush)
+      previous = objectPush
+      console.log(previous, 'previous');
+
+    // { '*,b,*': [ 'a', 'b', 'c' ] } 'previous'
   }
 
 
